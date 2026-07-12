@@ -15,6 +15,7 @@ using System.Net.Mail;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
+using PublicComplaintForm_API.Models;
 
 string baseDir = AppContext.BaseDirectory;
 
@@ -353,5 +354,37 @@ app.MapPost("/send-email", async (EmailRequest request) =>
     }
 });
 
+
+app.MapGet("/monthly-report", () =>
+{
+    var report = new List<MonthlyReport>
+    {
+        new()
+        {
+            DepartmentName = "שירות",
+            CurrentMonth = 42,
+            PreviousMonth = 39,
+            SameMonthLastYear = 35
+        },
+
+        new()
+        {
+            DepartmentName = "גבייה",
+            CurrentMonth = 18,
+            PreviousMonth = 15,
+            SameMonthLastYear = 12
+        },
+
+        new()
+        {
+            DepartmentName = "תמיכה",
+            CurrentMonth = 31,
+            PreviousMonth = 28,
+            SameMonthLastYear = 25
+        }
+    };
+
+    return Results.Ok(report);
+});
 
 app.Run();
